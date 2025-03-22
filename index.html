@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>먹어볼래 by NJ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #ff6600;
+        }
+		h2 {
+			font-size: medium;
+            color: #000000;
+        }
+        #search-bar {
+            width: 60%;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .food-container {
+            width: 60%;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .food-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .text {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>먹어볼래</h1>
+	<h2>초딩입맛의 매우 주관적인 평가</h2>
+    <input type="text" id="search-bar" placeholder="메뉴 또는 가게 이름 검색..." onkeyup="filterFood()">
+
+    <div class="food-container" id="food-list">
+        <!-- JavaScript로 데이터 추가 -->
+    </div>
+
+    <script>
+        const foodData = [
+            { img: "images/1.jpg", menu: "해산물 오이스터 파스타", shop: "비스트로베네토", rating: "⭐⭐⭐⭐⭐", review: "극락, 환상" },
+            { img: "images/2.jpg", menu: "산더미물갈비", shop: "신사우물갈비", rating: "⭐⭐⭐", review: "무난. 생각보다 매움" },
+        ];
+
+        const foodList = document.getElementById("food-list");
+
+        function displayFood(items) {
+            foodList.innerHTML = "";
+            items.forEach(food => {
+                const foodItem = document.createElement("div");
+                foodItem.className = "food-item";
+                foodItem.innerHTML = `
+                    <img src="${food.img}" alt="음식 사진">
+                    <div class="text">${food.menu}</div>
+                    <div class="text">${food.shop}</div>
+                    <div class="text">${food.rating}</div>
+                    <div class="text">${food.review}</div>
+                `;
+                foodList.appendChild(foodItem);
+            });
+        }
+
+        function filterFood() {
+            const query = document.getElementById("search-bar").value.toLowerCase();
+            const filtered = foodData.filter(food => 
+                food.menu.toLowerCase().includes(query) || 
+                food.shop.toLowerCase().includes(query)
+            );
+            displayFood(filtered);
+        }
+
+        displayFood(foodData);
+    </script>
+
+</body>
+</html>
