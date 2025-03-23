@@ -28,6 +28,10 @@
             border-radius: 5px;
             font-size: 16px;
         }
+        .distance-info {
+            margin-top: 1px; /* 위쪽 간격을 줄여 검색바와 가까이 붙임 */
+            color: rgb(66, 66, 66); /* 글자 색을 살짝 연하게 (선택사항) */
+        }
         .food-container {
             width: 60%;
             margin: 20px auto;
@@ -61,18 +65,25 @@
     <h1>먹어볼래</h1>
 	<h2>초딩입맛의 매우 주관적인 평가</h2>
     <input type="text" id="search-bar" placeholder="메뉴 또는 가게 이름 검색..." onkeyup="filterFood()">
-
+    <p class="distance-info"> 회관 기준 근거리: 🚶 / 장거리: 🚗</p>
     <div class="food-container" id="food-list">
-        <!-- JavaScript로 데이터 추가 -->
+
     </div>
 
     <script>
         const foodData = [
-            { img: "images/1.jpg", menu: "해산물 오이스터 파스타", shop: "비스트로베네토", rating: "⭐⭐⭐⭐⭐", review: "극락, 환상" },
-            { img: "images/2.jpg", menu: "산더미물갈비", shop: "신사우물갈비", rating: "⭐⭐⭐", review: "무난. 생각보다 매움" },
+            { img: "images/1.jpg", menu: "해산물 오이스터 파스타", shop: "비스트로베네토 🚶", rating: "⭐⭐⭐⭐⭐", review: "극락, 환상" },
+            { img: "images/2.jpg", menu: "산더미물갈비", shop: "신사우물갈비 🚶", rating: "⭐⭐⭐", review: "무난. 생각보다 매움" }
         ];
 
         const foodList = document.getElementById("food-list");
+
+        function shuffleArray(array) { // 페이지 방문 시 fooditem 순서 랜덤 변경
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // 배열 요소 교환
+            }
+        }
 
         function displayFood(items) {
             foodList.innerHTML = "";
@@ -81,7 +92,7 @@
                 foodItem.className = "food-item";
                 foodItem.innerHTML = `
                     <img src="${food.img}" alt="음식 사진">
-                    <div class="text">${food.menu}</div>
+                    <div class="text"><strong>${food.menu}</strong></div>
                     <div class="text">${food.shop}</div>
                     <div class="text">${food.rating}</div>
                     <div class="text">${food.review}</div>
@@ -99,6 +110,7 @@
             displayFood(filtered);
         }
 
+        shuffleArray(foodData);
         displayFood(foodData);
     </script>
 
